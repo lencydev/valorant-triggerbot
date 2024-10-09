@@ -6,11 +6,15 @@ use device_query::{ DeviceQuery, DeviceState, Keycode };
 use enigo::{ Enigo, KeyboardControllable, Key };
 use eframe::{ App, CreationContext, Frame, egui::Context };
 
+use std::time::Duration;
+use std::thread;
+
 #[derive(PartialEq)]
 pub struct Settings {
   pub trigger_key: Keycode,
   pub target_color: [i32; 3],
   pub color_tolerance: i32,
+  pub trigger_delay: u64,
 }
 
 impl Default for Settings {
@@ -19,6 +23,7 @@ impl Default for Settings {
       trigger_key: Keycode::LShift,
       target_color: [250, 100, 250],
       color_tolerance: 70,
+      trigger_delay: 0,
     }
   }
 }
@@ -86,6 +91,11 @@ impl Triggerbot {
       if self.is_target_color_present() {
 
         self.enigo.key_click(Key::Layout('k'));
+
+        if self.settings.trigger_delay > 0 && self.is_target_color_present() {
+
+          thread::sleep(Duration::from_millis(self.settings.trigger_delay));
+        }
       }
     }
   }

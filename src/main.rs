@@ -8,7 +8,7 @@ use eframe::{ egui::Vec2, NativeOptions, IconData };
 
 fn main () -> Result<(), eframe::Error> {
 
-  let window_size = Option::from(Vec2::new(300.0, 140.0));
+  let window_size = Option::from(Vec2::new(350.0, 165.0));
 
   let options = NativeOptions {
     initial_window_size: window_size,

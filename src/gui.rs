@@ -22,8 +22,8 @@ pub fn build (app: &mut Triggerbot, ctx: &Context) {
           ui.set_width(ui.available_width());
 
           ui.label("Trigger Key:");
-          ComboBox::from_label("")
-            .selected_text(format!("{:?}", app.settings.trigger_key))
+          ComboBox::from_id_source("trigger_key_combo")
+            .selected_text(app.settings.trigger_key.to_string())
             .show_ui(ui, |ui| {
               for key in app.get_available_keys().iter() {
                 ui.selectable_value(&mut app.settings.trigger_key, *key, key.to_string());
@@ -51,6 +51,16 @@ pub fn build (app: &mut Triggerbot, ctx: &Context) {
 
           ui.label("Color Tolerance:");
           ui.add(Slider::new(&mut app.settings.color_tolerance, 0..=255));
+        });
+
+        ui.add_space(5.0);
+
+        ui.horizontal(|ui| {
+
+          ui.set_width(ui.available_width());
+
+          ui.label("Trigger Delay (ms):");
+          ui.add(Slider::new(&mut app.settings.trigger_delay, 0..=3000));
         });
       });
 
