@@ -1,3 +1,13 @@
+<div align = "center">
+  <img src = "assets/preview.png" alt = "preview">
+
+  <br />
+
+  <img src = "https://img.shields.io/github/v/release/lencydev/valorant-triggerbot" alt = "Release">
+  <img src = "https://img.shields.io/github/license/lencydev/valorant-triggerbot" alt = "License">
+  <img src = "https://img.shields.io/github/downloads/lencydev/valorant-triggerbot/total" alt = "Downloads">
+</div>
+
 # Usage
 1. Download the latest release from the [releases](https://github.com/lencydev/valorant-triggerbot/releases) page.
 2. In Valorant Settings:
@@ -27,6 +37,8 @@ If you prefer to build the application yourself, follow these steps:
    - Run exe to start the application.
 
 # Disclaimer
+> [!WARNING]
+> Currently, this application is not detectable by Vanguard. <br /> However, this may change in the future as Riot Games continuously updates their security measures.
 - The author is not responsible for any consequences resulting from the use of this software.
 - Using this application violates the game's terms of service and may result in your account being banned.
 

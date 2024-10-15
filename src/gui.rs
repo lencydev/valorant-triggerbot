@@ -85,7 +85,7 @@ pub fn build (app: &mut Triggerbot, ctx: &Context) {
         let reset_button_color = if is_default {
           Color32::DARK_GRAY
         } else {
-          Color32::from_rgb(100, 100  , 180)
+          Color32::from_rgb(100, 100, 180)
         };
 
         let reset_button = Button::new(RichText::new("Reset Settings").color(Color32::WHITE))

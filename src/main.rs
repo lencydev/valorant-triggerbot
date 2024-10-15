@@ -14,9 +14,9 @@ fn main () -> Result<(), eframe::Error> {
     initial_window_size: window_size,
     max_window_size: window_size,
     min_window_size: window_size,
-    follow_system_theme: false,
     resizable: false,
     maximized: false,
+    centered: true,
     icon_data: Some(IconData::try_from_png_bytes(include_bytes!("../assets/favicon.ico")).unwrap()),
     ..Default::default()
   };

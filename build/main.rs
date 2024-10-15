@@ -1,6 +1,6 @@
 use winres::WindowsResource;
 
-fn main() {
+fn main () {
 
   if cfg!(target_os = "windows") {
 
