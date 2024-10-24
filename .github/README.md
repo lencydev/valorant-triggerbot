@@ -3,11 +3,11 @@
 
   <br />
 
-  <img src = "https://img.shields.io/github/v/release/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "Release" />
-  <img src = "https://img.shields.io/github/license/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "License" />
-  <img src = "https://img.shields.io/github/downloads/lencydev/valorant-triggerbot/total?style=flat-square&color=5864F9" alt = "Downloads" />
-  <img src = "https://img.shields.io/github/forks/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "Forks" />
-  <img src = "https://img.shields.io/github/stars/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "Stars" />
+  <a href = "https://github.com/lencydev/valorant-triggerbot/releases/latest"><img src = "https://img.shields.io/github/v/release/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "Release" /></a>
+  <a href = "https://github.com/lencydev/valorant-triggerbot/blob/main/LICENSE"><img src = "https://img.shields.io/github/license/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "License" /></a>
+  <a href = "https://github.com/lencydev/valorant-triggerbot/releases"><img src = "https://img.shields.io/github/downloads/lencydev/valorant-triggerbot/total?style=flat-square&color=5864F9" alt = "Downloads" /></a>
+  <a href = "https://github.com/lencydev/valorant-triggerbot/forks?include=active,archived,inactive,network&page=1&period=&sort_by=last_updated"><img src = "https://img.shields.io/github/forks/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "Forks" /></a>
+  <a href = "https://github.com/lencydev/valorant-triggerbot/stargazers"><img src = "https://img.shields.io/github/stars/lencydev/valorant-triggerbot?style=flat-square&color=5864F9" alt = "Stars" /></a>
 </div>
 
 # Usage
