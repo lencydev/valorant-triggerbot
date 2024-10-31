@@ -21,5 +21,5 @@ fn main () -> Result<(), eframe::Error> {
     ..Default::default()
   };
 
-  eframe::run_native("Valorant Triggerbot (v1.0.0)", options, Box::new(|cc| Box::new(Triggerbot::new(cc))))
+  eframe::run_native("Valorant Triggerbot (v1.1.0)", options, Box::new(|cc| Box::new(Triggerbot::new(cc))))
 }
