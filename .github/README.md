@@ -29,7 +29,7 @@
   <p>These are the default and recommended settings.</p>
 
   - `Resolution:` 1920x1080 (If your in-game resolution is different, change it)
-  - `Trigger Key:` Left Shift
+  - `Trigger Keys:` Left Shift
   - `Target Color:` Purple (RGB: 250, 100, 250)
   - `Color Tolerance:` 70
   - `Trigger Delay:` 50ms
@@ -40,7 +40,7 @@
 
   <p>This GUI image may not always reflect the most current version. The actual interface may vary depending on the version you are using.</p>
 
-  <img src = "https://i.imgur.com/FFRD1rY.png" alt = "gui" />
+  <img src = "https://i.imgur.com/q9qzaAb.png" alt = "gui" />
 </details>
 
 # Building from Source
@@ -63,7 +63,9 @@
 
 # Disclaimer
 > [!WARNING]
-> Currently, this application is not detectable by Vanguard. <br /> However, this may change in the future as Riot Games continuously updates their security measures.
+> Currently, this application is not detectable by Vanguard.<br />
+> However, this may change in the future as Riot Games continuously updates their security measures.
+
 - The author is not responsible for any consequences resulting from the use of this software.
 - Using this application violates the game's terms of service and may result in your account being banned.
 
