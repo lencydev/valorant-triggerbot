@@ -12,9 +12,15 @@ use std::{
   fmt::{ Display, Formatter, Result },
 };
 
+#[derive(PartialEq, Debug)]
+pub enum TriggerKey {
+  Keyboard(Keycode),
+  Mouse(MouseButton)
+}
+
 #[derive(PartialEq)]
 pub struct Settings {
-  pub trigger_key: Keycode,
+  pub trigger_keys: Vec<TriggerKey>,
   pub target_color: [i32; 3],
   pub color_tolerance: i32,
   pub trigger_delay: u64,
@@ -24,7 +30,7 @@ pub struct Settings {
 impl Default for Settings {
   fn default () -> Self {
     Self {
-      trigger_key: Keycode::LShift,
+      trigger_keys: vec![TriggerKey::Keyboard(Keycode::LShift)],
       target_color: [250, 100, 250],
       color_tolerance: 70,
       trigger_delay: 50,
@@ -86,26 +92,23 @@ impl Triggerbot {
     self.settings == Settings::default()
   }
 
-  pub fn get_available_keys (&self) -> Vec<Keycode> {
-    vec![
-      Keycode::LShift,
-      Keycode::LControl,
-      Keycode::LAlt,
-    ]
-  }
-
   pub fn set_resolution (&mut self, width: u32, height: u32) {
 
     self.settings.resolution = Resolution { width, height };
-    
+
     self.update_trigger_area();
   }
 
   pub fn shoot (&mut self) {
 
-    let keys: Vec<Keycode> = self.device_state.get_keys();
+    let keys = self.device_state.get_keys();
 
-    if keys.contains(&self.settings.trigger_key) {
+    if self.settings.trigger_keys.iter().any(|trigger| {
+      match trigger {
+        TriggerKey::Keyboard(key) => keys.contains(key),
+        TriggerKey::Mouse(button) => button.is_pressed(),
+      }
+    }) {
 
       if self.is_target_color_present() {
 
@@ -151,6 +154,70 @@ impl Triggerbot {
       width_percent: fixed_width / width as f32,
       height_percent: fixed_height / height as f32,
     };
+  }
+
+  pub fn get_keys (&self) -> Vec<TriggerKey> {
+    let mut triggers = vec![
+      TriggerKey::Mouse(MouseButton::X1Button),
+      TriggerKey::Mouse(MouseButton::X2Button),
+    ];
+
+    for key in vec![
+      Keycode::LShift,
+      Keycode::RShift,
+      Keycode::LControl,
+      Keycode::RControl,
+      Keycode::LAlt,
+      Keycode::RAlt,
+
+      Keycode::A,
+      Keycode::B,
+      Keycode::C,
+      Keycode::D,
+      Keycode::E,
+      Keycode::F,
+      Keycode::G,
+      Keycode::H,
+      Keycode::I,
+      Keycode::J,
+      Keycode::K,
+      Keycode::L,
+      Keycode::M,
+      Keycode::N,
+      Keycode::O,
+      Keycode::P,
+      Keycode::Q,
+      Keycode::R,
+      Keycode::S,
+      Keycode::T,
+      Keycode::U,
+      Keycode::V,
+      Keycode::W,
+      Keycode::X,
+      Keycode::Y,
+      Keycode::Z,
+    ] {
+      triggers.push(TriggerKey::Keyboard(key));
+    }
+
+    triggers
+  }
+
+  pub fn get_keys_display_name (&self, trigger: &TriggerKey) -> String {
+    match trigger {
+      TriggerKey::Keyboard(key) => match key {
+        Keycode::LShift => "Left Shift".to_string(),
+        Keycode::RShift => "Right Shift".to_string(),
+        Keycode::LControl => "Left Control".to_string(),
+        Keycode::RControl => "Right Control".to_string(),
+        Keycode::LAlt => "Left Alt".to_string(),
+        Keycode::RAlt => "Right Alt".to_string(),
+        _ => format!("{:?}", key),
+      },
+      TriggerKey::Mouse(MouseButton::X1Button) => "Mouse Backward (X1)".to_string(),
+      TriggerKey::Mouse(MouseButton::X2Button) => "Mouse Forward (X2)".to_string(),
+      _ => format!("{:?}", trigger),
+    }
   }
 }
 

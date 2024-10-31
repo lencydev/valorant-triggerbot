@@ -2,15 +2,19 @@ use crate::app::Triggerbot;
 
 use eframe::egui::{
   Slider, Color32, CentralPanel, Button,
-  DragValue, Context, RichText, ComboBox, ScrollArea
+  DragValue, Context, RichText, ScrollArea, ComboBox
 };
 
 pub fn build(app: &mut Triggerbot, ctx: &Context) {
+
   CentralPanel::default().show(ctx, |ui| {
+
     ui.vertical(|ui| {
+
       ui.set_width(ui.available_width());
 
       ui.group(|ui| {
+
         ui.set_width(ui.available_width());
 
         ui.horizontal(|ui| {
@@ -31,18 +35,42 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
         ui.add_space(5.0);
 
         ui.horizontal(|ui| {
+
           ui.set_width(ui.available_width());
 
-          ui.label("Trigger Key:");
-          ComboBox::from_id_source("trigger_key_combo")
-            .selected_text(app.settings.trigger_key.to_string())
-            .width(150.0)
+          ui.label("Trigger Keys:");
+
+          ComboBox::from_id_source("combobox_trigger_keys")
+            .selected_text(format!("{} keys selected", app.settings.trigger_keys.len()))
+            .width(160.0)
             .show_ui(ui, |ui| {
-              ui.set_min_width(140.0);
+
+              ui.set_min_width(160.0);
               ui.set_max_height(80.0);
-              ScrollArea::vertical().max_height(80.0).show(ui, |ui| {
-                for key in app.get_available_keys().iter() {
-                  ui.selectable_value(&mut app.settings.trigger_key, *key, key.to_string());
+
+              ScrollArea::vertical().max_height(200.0).show(ui, |ui| {
+
+                let available_triggers = app.get_keys();
+
+                for trigger in available_triggers {
+
+                  let mut is_selected = app.settings.trigger_keys.contains(&trigger);
+                  let display_name = app.get_keys_display_name(&trigger);
+
+                  if ui.checkbox(&mut is_selected, display_name).changed() {
+
+                    if is_selected && !app.settings.trigger_keys.contains(&trigger) {
+
+                      app.settings.trigger_keys.push(trigger);
+
+                    } else if !is_selected {
+
+                      if let Some(pos) = app.settings.trigger_keys.iter().position(|x| *x == trigger) {
+
+                        app.settings.trigger_keys.remove(pos);
+                      }
+                    }
+                  }
                 }
               });
             });
@@ -51,6 +79,7 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
         ui.add_space(5.0);
 
         ui.horizontal(|ui| {
+
           ui.set_width(ui.available_width());
 
           ui.label("Target Color (R, G, B):");
@@ -62,6 +91,7 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
         ui.add_space(5.0);
 
         ui.horizontal(|ui| {
+
           ui.set_width(ui.available_width());
 
           ui.label("Color Tolerance:");
@@ -71,6 +101,7 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
         ui.add_space(5.0);
 
         ui.horizontal(|ui| {
+
           ui.set_width(ui.available_width());
 
           ui.label("Trigger Delay (ms):");
@@ -81,6 +112,7 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
       ui.add_space(5.0);
 
       ui.horizontal(|ui| {
+
         ui.set_width(ui.available_width());
 
         let (button_text, button_color) = if app.enabled {
