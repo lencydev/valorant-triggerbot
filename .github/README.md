@@ -15,7 +15,7 @@
 2. Run the exe file and click the `Enable` button to enable the triggerbot.
 
 <details>
-  <summary><h3>Valorant Settings:</h3></summary>
+  <summary><h3>Valorant Settings</h3></summary>
 
   <p>These are the in-game settings required for the triggerbot to work.</p>
 
@@ -24,7 +24,7 @@
 </details>
 
 <details>
-  <summary><h3>Default Settings:</h3></summary>
+  <summary><h3>Default Settings</h3></summary>
 
   <p>These are the default and recommended settings.</p>
 
@@ -36,11 +36,9 @@
 </details>
 
 <details>
-  <summary><h3>GUI:</h3></summary>
+  <summary><h3>GUI</h3></summary>
 
-  <p>This GUI image may not always reflect the most current version. The actual interface may vary depending on the version you are using.</p>
-
-  <img src = "https://i.imgur.com/q9qzaAb.png" alt = "gui" />
+  <img src = "https://i.imgur.com/tSSHfiu.png" alt = "gui" />
 </details>
 
 # Building from Source
