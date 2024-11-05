@@ -4,22 +4,33 @@ mod app;
 mod gui;
 
 use app::Triggerbot;
-use eframe::{ egui::Vec2, NativeOptions, IconData };
+use eframe::{
+  NativeOptions,
+  egui::{
+    ViewportBuilder,
+    IconData,
+  }
+};
 
 fn main () -> Result<(), eframe::Error> {
 
-  let window_size = Option::from(Vec2::new(350.0, 186.0));
-
   let options = NativeOptions {
-    initial_window_size: window_size,
-    max_window_size: window_size,
-    min_window_size: window_size,
-    resizable: false,
-    maximized: false,
-    centered: true,
-    icon_data: Some(IconData::try_from_png_bytes(include_bytes!("../assets/favicon.ico")).unwrap()),
+    viewport: ViewportBuilder::default()
+      .with_resizable(false)
+      .with_transparent(true)
+      .with_maximize_button(false)
+      .with_inner_size([350.0, 212.0])
+      .with_icon(IconData {
+        rgba: image::load_from_memory(include_bytes!("../assets/icon.png")).unwrap().to_rgba8().to_vec(),
+        width: 128,
+        height: 128,
+      }),
     ..Default::default()
   };
 
-  eframe::run_native("Valorant Triggerbot (v1.1.0)", options, Box::new(|cc| Box::new(Triggerbot::new(cc))))
+  eframe::run_native(
+    "Valorant Triggerbot (v1.2.0)",
+    options,
+    Box::new(|_cc| Ok(Box::new(Triggerbot::default()))),
+  )
 }
