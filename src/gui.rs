@@ -2,10 +2,10 @@ use crate::app::Triggerbot;
 
 use eframe::egui::{
   Slider, Color32, CentralPanel, Button,
-  DragValue, Context, RichText, ScrollArea, ComboBox
+  DragValue, Context, RichText, ScrollArea, ComboBox,
 };
 
-pub fn build(app: &mut Triggerbot, ctx: &Context) {
+pub fn build (app: &mut Triggerbot, ctx: &Context) {
 
   CentralPanel::default().show(ctx, |ui| {
 
@@ -23,11 +23,11 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
           let mut height = app.settings.resolution.height;
 
           ui.label("Resolution:");
-          if ui.add(DragValue::new(&mut width).speed(1).clamp_range(1..=5000)).changed() {
+          if ui.add(DragValue::new(&mut width).speed(1).range(1..=5000)).changed() {
             app.set_resolution(width, app.settings.resolution.height);
           }
           ui.label("x");
-          if ui.add(DragValue::new(&mut height).speed(1).clamp_range(1..=5000)).changed() {
+          if ui.add(DragValue::new(&mut height).speed(1).range(1..=5000)).changed() {
             app.set_resolution(app.settings.resolution.width, height);
           }
         });
@@ -40,7 +40,7 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
 
           ui.label("Trigger Keys:");
 
-          ComboBox::from_id_source("combobox_trigger_keys")
+          ComboBox::from_id_salt("combobox_trigger_keys")
             .selected_text(format!("{} keys selected", app.settings.trigger_keys.len()))
             .width(160.0)
             .show_ui(ui, |ui| {
@@ -82,9 +82,31 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
 
           ui.set_width(ui.available_width());
 
+          ui.label("Trigger Delay (ms):");
+          ui.add(Slider::new(&mut app.settings.trigger_delay, 0..=3000));
+        });
+
+        ui.add_space(5.0);
+
+        ui.horizontal(|ui| {
+
+          ui.set_width(ui.available_width());
+
+          ui.label("Trigger Area:");
+          if ui.add(Slider::new(&mut app.settings.trigger_area, 5.0..=100.0)).changed() {
+            app.update_trigger_area();
+          }
+        });
+
+        ui.add_space(5.0);
+
+        ui.horizontal(|ui| {
+
+          ui.set_width(ui.available_width());
+
           ui.label("Target Color (R, G, B):");
           for i in 0..3 {
-            ui.add(DragValue::new(&mut app.settings.target_color[i]).speed(1).clamp_range(0..=255));
+            ui.add(DragValue::new(&mut app.settings.target_color[i]).speed(1).range(0..=255));
           }
         });
 
@@ -96,16 +118,6 @@ pub fn build(app: &mut Triggerbot, ctx: &Context) {
 
           ui.label("Color Tolerance:");
           ui.add(Slider::new(&mut app.settings.color_tolerance, 0..=255));
-        });
-
-        ui.add_space(5.0);
-
-        ui.horizontal(|ui| {
-
-          ui.set_width(ui.available_width());
-
-          ui.label("Trigger Delay (ms):");
-          ui.add(Slider::new(&mut app.settings.trigger_delay, 0..=3000));
         });
       });
 

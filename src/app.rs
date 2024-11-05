@@ -3,7 +3,7 @@ use crate::gui;
 use screenshots::Screen;
 use device_query::{ DeviceQuery, DeviceState, Keycode };
 use inputbot::MouseButton;
-use eframe::{ App, CreationContext, Frame, egui::Context };
+use eframe::{ App, Frame, egui::Context };
 
 use std::{
   thread,
@@ -20,21 +20,23 @@ pub enum TriggerKey {
 
 #[derive(PartialEq)]
 pub struct Settings {
+  pub resolution: Resolution,
   pub trigger_keys: Vec<TriggerKey>,
+  pub trigger_delay: u64,
+  pub trigger_area: f32,
   pub target_color: [i32; 3],
   pub color_tolerance: i32,
-  pub trigger_delay: u64,
-  pub resolution: Resolution,
 }
 
 impl Default for Settings {
   fn default () -> Self {
     Self {
+      resolution: Resolution { width: 1920, height: 1080 },
       trigger_keys: vec![TriggerKey::Keyboard(Keycode::LShift)],
+      trigger_delay: 50,
+      trigger_area: 5.0,
       target_color: [250, 100, 250],
       color_tolerance: 70,
-      trigger_delay: 50,
-      resolution: Resolution { width: 1920, height: 1080 },
     }
   }
 }
@@ -62,14 +64,12 @@ pub struct Triggerbot {
 
 impl Triggerbot {
 
-  pub fn new (_cc: &CreationContext<'_>) -> Self {
-
-    let screen = Screen::from_point(0, 0).unwrap();
+  pub fn default () -> Self {
 
     let mut triggerbot = Self {
       enabled: false,
       device_state: DeviceState::new(),
-      screen,
+      screen: Screen::from_point(0, 0).unwrap(),
       trigger_area: TriggerArea {
         x_percent: 0.0,
         y_percent: 0.0,
@@ -86,6 +86,7 @@ impl Triggerbot {
 
   pub fn reset_settings (&mut self) {
     self.settings = Settings::default();
+    self.update_trigger_area();
   }
 
   pub fn is_default_settings (&self) -> bool {
@@ -99,7 +100,7 @@ impl Triggerbot {
     self.update_trigger_area();
   }
 
-  pub fn shoot (&mut self) {
+  pub fn triggerbot (&mut self) {
 
     let keys = self.device_state.get_keys();
 
@@ -110,7 +111,7 @@ impl Triggerbot {
       }
     }) {
 
-      if self.is_target_color_present() {
+      if self.enabled && self.is_target_color_present() {
 
         MouseButton::LeftButton.press();
         MouseButton::LeftButton.release();
@@ -145,57 +146,33 @@ impl Triggerbot {
 
     let (width, height) = (self.settings.resolution.width, self.settings.resolution.height);
 
-    let fixed_width = 5.0;
-    let fixed_height = 5.0;
-
     self.trigger_area = TriggerArea {
-      x_percent: 0.5 - (fixed_width / 2.0 / width as f32),
-      y_percent: 0.5 - (fixed_height / 2.0 / height as f32),
-      width_percent: fixed_width / width as f32,
-      height_percent: fixed_height / height as f32,
+      x_percent: 0.5 - (self.settings.trigger_area / 2.0 / width as f32),
+      y_percent: 0.5 - (self.settings.trigger_area / 2.0 / height as f32),
+      width_percent: self.settings.trigger_area / width as f32,
+      height_percent: self.settings.trigger_area / height as f32,
     };
   }
 
   pub fn get_keys (&self) -> Vec<TriggerKey> {
+
     let mut triggers = vec![
       TriggerKey::Mouse(MouseButton::X1Button),
       TriggerKey::Mouse(MouseButton::X2Button),
     ];
 
     for key in vec![
-      Keycode::LShift,
-      Keycode::RShift,
-      Keycode::LControl,
-      Keycode::RControl,
-      Keycode::LAlt,
-      Keycode::RAlt,
-
-      Keycode::A,
-      Keycode::B,
-      Keycode::C,
-      Keycode::D,
-      Keycode::E,
-      Keycode::F,
-      Keycode::G,
-      Keycode::H,
-      Keycode::I,
-      Keycode::J,
-      Keycode::K,
-      Keycode::L,
-      Keycode::M,
-      Keycode::N,
-      Keycode::O,
-      Keycode::P,
-      Keycode::Q,
-      Keycode::R,
-      Keycode::S,
-      Keycode::T,
-      Keycode::U,
-      Keycode::V,
-      Keycode::W,
-      Keycode::X,
-      Keycode::Y,
-      Keycode::Z,
+      Keycode::LShift, Keycode::RShift, Keycode::LControl,
+      Keycode::RControl, Keycode::LAlt, Keycode::RAlt,
+      Keycode::A, Keycode::F, Keycode::B,
+      Keycode::G, Keycode::C, Keycode::H,
+      Keycode::D, Keycode::I, Keycode::E,
+      Keycode::J, Keycode::K, Keycode::P,
+      Keycode::L, Keycode::Q, Keycode::M,
+      Keycode::R, Keycode::N, Keycode::S,
+      Keycode::O, Keycode::T, Keycode::U,
+      Keycode::Z, Keycode::V, Keycode::Y,
+      Keycode::W, Keycode::X,
     ] {
       triggers.push(TriggerKey::Keyboard(key));
     }
@@ -204,6 +181,7 @@ impl Triggerbot {
   }
 
   pub fn get_keys_display_name (&self, trigger: &TriggerKey) -> String {
+
     match trigger {
       TriggerKey::Keyboard(key) => match key {
         Keycode::LShift => "Left Shift".to_string(),
@@ -214,9 +192,11 @@ impl Triggerbot {
         Keycode::RAlt => "Right Alt".to_string(),
         _ => format!("{:?}", key),
       },
-      TriggerKey::Mouse(MouseButton::X1Button) => "Mouse Backward (X1)".to_string(),
-      TriggerKey::Mouse(MouseButton::X2Button) => "Mouse Forward (X2)".to_string(),
-      _ => format!("{:?}", trigger),
+      TriggerKey::Mouse(key) => match key {
+        MouseButton::X1Button => "Mouse Backward (X1)".to_string(),
+        MouseButton::X2Button => "Mouse Forward (X2)".to_string(),
+        _ => format!("{:?}", key),
+      },
     }
   }
 }
@@ -227,9 +207,7 @@ impl App for Triggerbot {
 
     gui::build(self, ctx);
 
-    if self.enabled {
-      self.shoot();
-    }
+    self.triggerbot();
 
     ctx.request_repaint();
   }
