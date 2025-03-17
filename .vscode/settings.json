@@ -1,0 +1,75 @@
+{
+  "npm.packageManager": "pnpm",
+
+  "terminal.integrated.allowChords": true,
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.fontFamily": "Fira Code",
+
+  "explorer.compactFolders": false,
+  "explorer.decorations.badges": true,
+
+  "workbench.colorTheme": "Dark",
+  "workbench.iconTheme": "vs-seti",
+
+  "files.autoSave": "afterDelay",
+  "files.trimTrailingWhitespace": true,
+
+  "editor.tabSize": 2,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.codeLens": false,
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": false,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+  },
+
+  "git.allowForcePush": true,
+  "git.useForcePushWithLease": true,
+  "git.allowNoVerifyCommit": true,
+  "git.autofetch": true,
+
+  "vscord.app.name": "Visual Studio Code",
+  "vscord.status.details.text.idle": "Idle",
+  "vscord.status.image.small.idle.text": "Idle",
+  "vscord.status.image.small.notInFile.text": "Idle",
+  "vscord.status.details.text.notInFile": "",
+  "vscord.status.state.text.notInFile": "",
+  "vscord.status.showElapsedTime": true,
+  "vscord.status.resetElapsedTimePerFile": true,
+  "vscord.status.problems.enabled": false,
+  "vscord.status.idle.enabled": true,
+  "vscord.status.idle.check": true,
+
+  "vscord.status.image.large.viewing.text": "{lang}",
+  "vscord.status.image.small.viewing.text": "{app_name}",
+  "vscord.status.details.text.viewing": "📁 {folder_and_file}",
+  "vscord.status.state.text.viewing": "📝 {current_column}:{current_line}/{line_count} ({file_size}) {git_repo}@{git_branch}",
+
+  "vscord.status.image.large.editing.text": "{lang}",
+  "vscord.status.image.small.editing.text": "{app_name}",
+  "vscord.status.details.text.editing": "📁 {folder_and_file}",
+  "vscord.status.state.text.editing": "📝 {current_column}:{current_line}/{line_count} ({file_size}) {git_repo}@{git_branch}",
+
+  "vscord.status.image.large.debugging.text": "{lang}",
+  "vscord.status.image.small.debugging.text": "{app_name}",
+  "vscord.status.details.text.debugging": "📁 {folder_and_file}",
+  "vscord.status.state.text.debugging": "📝 {current_column}:{current_line}/{line_count} ({file_size}) {git_repo}@{git_branch}",
+
+  "codesnap.backgroundColor": "#1E2028",
+  "codesnap.boxShadow": "rgba(0, 0, 0, 0.55) 0px 20px 68px",
+  "codesnap.containerPadding": "2em",
+  "codesnap.roundedCorners": true,
+  "codesnap.showWindowControls": false,
+  "codesnap.showWindowTitle": false,
+  "codesnap.realLineNumbers": false,
+  "codesnap.transparentBackground": false,
+  "codesnap.target": "container",
+  "codesnap.shutterAction": "copy",
+
+  "[markdown]": {
+    "editor.wordWrap": "off"
+  },
+}
